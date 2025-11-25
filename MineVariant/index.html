@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>MineVariant</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="alltextures/64x/bomb.png" type="image/png" id="favicon">
+</head>
+
+<body>
+  <h1>MineVariant</h1>
+  <!-- Audio -->
+  <audio id="bgMusic" loop src="sound/click-and-flag.mp3" preload="auto" style="
+    display: none;
+  "></audio>
+  <div>
+    <button id="beginnerButton" class="topMargin">Beginner</button>
+    <button id="easyButton">Easy</button>
+    <button id="intermediateButton">Intermediate</button>
+    <button id="hardButton">Hard</button>
+    <button id="expertButton">Expert</button>
+    <button id="extremeButton">Extreme</button>
+    <button id="impossibleButton">Impossible</button>
+    <button id="customButton">Custom</button>
+  </div>
+  <!-- Roguelike-->
+  <div id="roguelikePopup" class="popup">
+    <div class="popup-content">
+      <h2 id="roguelikeTitle">Choose an ability!</h2>
+      <br>
+      <div class="container">
+        <div class="rectangular-div" id="rogueLikeOption1">
+          <h3 id="rogueLikeOption1Name">Option 1 Name</h3><br>
+          <h4 id="rogueLikeOption1Desc">Option 1 Description</h4><br>
+          <button id="rogueLikeOption1Button">Choose</button>
+        </div>
+        <div class="rectangular-div" id="rogueLikeOption2">
+          <h3 id="rogueLikeOption2Name">Option 2 Name</h3><br>
+          <h4 id="rogueLikeOption2Desc">Option 2 Description</h4><br>
+          <button id="rogueLikeOption2Button">Choose</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modifiers popup -->
+  <div id="modifierPopup" class="popup">
+  <div class="popup-content-wide">
+    <span id="modifiersClose" class="close">&times;</span>
+    <h2>Modifiers</h2>
+    <button id="setModifiersButton">Set modifiers</button>
+    <br>
+
+    <!-- Row 1 -->
+    <div class="container topMargin">
+      <div class="rectangular-div modifierGood">
+        <h3>Lifeforce</h3>
+        <h4>Increases max lives by 1</h4>
+        <h5>-10% Score</h5>
+        <label><input type="checkbox" id="m_life_active"> Active</label>
+      </div>
+
+      <div class="rectangular-div modifierBad">
+        <h3>Bombardment</h3>
+        <h4>Increases bomb ratio by 25%</h4>
+        <h5>+10% Score</h5>
+        <label><input type="checkbox" id="m_bomb_active"> Active</label>
+      </div>
+    </div><br>
+
+    <!-- Row 2 -->
+    <div class="container">
+      <div class="rectangular-div modifierTerrible">
+        <h3>Precision</h3>
+        <h4>Clicking any bomb (including heals) is an instant death</h4>
+        <h5>+50% Score</h5>
+        <label><input type="checkbox" id="m_precision_active"> Active</label>
+      </div>
+
+      <div class="rectangular-div modifierBad">
+        <h3>Overload</h3>
+        <h4>Increases bomb ratio by 55%</h4>
+        <h5>+30% Score</h5>
+        <label><input type="checkbox" id="m_overload_active"> Active</label>
+      </div>
+    </div><br>
+
+    <!-- Row 3 -->
+    <div class="container">
+      <div class="rectangular-div modifierWorst">
+        <h3>Sudden Death</h3>
+        <h4>You have 4 seconds to win. Each cell clicked resets the timer</h4>
+        <h5>+200% Score</h5>
+        <label><input type="checkbox" id="m_suddendeath_active"> Active</label>
+      </div>
+
+      <div class="rectangular-div modifierGood">
+        <h3>Radar</h3>
+        <h4>Every 30 seconds reveals 2 bombs</h4>
+        <h5>-25% Score</h5>
+        <label><input type="checkbox" id="m_radar_active"> Active</label>
+      </div>
+    </div><br>
+
+    <!-- Row 4 -->
+    <div class="container">
+      <div class="rectangular-div modifierBad">
+        <h3>Camouflage</h3>
+        <h4>Numbers are replaced with a [black -> white] gradient depending on nearby bombs</h4>
+        <h5>+25% Score</h5>
+        <label><input type="checkbox" id="m_camo_active"> Active</label>
+      </div>
+
+      <div class="rectangular-div modifierTerrible">
+        <h3>Binded</h3>
+        <h4>Clicking a bomb will cause all bombs around it to explode</h4>
+        <h5>+40% Score</h5>
+        <label><input type="checkbox" id="m_binded_active"> Active</label>
+      </div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="container">
+      <div class="rectangular-div modifierGood">
+        <h3>Sandbox</h3>
+        <h4>You cannot die</h4>
+        <h5>-100% Score</h5>
+        <label><input type="checkbox" id="m_sandbox_active"> Active</label>
+      </div>
+
+      <div class="rectangular-div modifierGood">
+        <h3>Echo</h3>
+        <h4>Clicking a cell with quickly reveal a ping on the location of a random bomb</h4>
+        <h5>-30% Score</h5>
+        <label><input type="checkbox" id="m_echo_active"> Active</label>
+      </div>
+    </div>
+    <!-- Row 6 -->
+    <div class="container">
+      <div class="rectangular-div modifierBad">
+        <h3>Reverse</h3>
+        <h4>Numbers are reversed (1 -> 8)</h4>
+        <h5>+15% Score</h5>
+        <label><input type="checkbox" id="m_reverse_active"> Active</label>
+      </div>
+
+      <div class="rectangular-div modifierTerrible">
+        <h3>Blink</h3>
+        <h4>All cells are hidden except for 2 seconds every 2 seconds</h4>
+        <h5>+35% Score</h5>
+        <label><input type="checkbox" id="m_blink_active"> Active</label>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- Lost/win popup -->
+  <div id="gameEndPopup" class="popup">
+    <div class="popup-content">
+      <span id="gameEndClosePopup" class="close">&times;</span>
+      <h2 id="gameEndPopupTitle">You ___!</h2>
+      <ul id="gameEndPopupList"></ul>
+      <div>
+        <h2>Final score: </h2>
+        <h2 id="gameEndPopupScore">0</h2>
+      </div>
+    </div>
+  </div>
+  <!-- Custom Difficulty Popup -->
+  <div id="customPopup" class="popup">
+    <div class="popup-content">
+      <span id="customClosePopup" class="close">&times;</span>
+      <h2>Custom Difficulty</h2>
+
+      <div class="form-group">
+        <label>Rows</label>
+        <input type="number" id="customRows">
+      </div>
+
+      <div class="form-group">
+        <label>Columns</label>
+        <input type="number" id="customCols">
+      </div>
+
+      <div class="form-group">
+        <label>Lives</label>
+        <input type="number" id="customLives">
+      </div>
+
+      <div class="form-group">
+        <label>Percentage of bombs</label>
+        <input type="number" id="customBombRatio">
+      </div>
+
+      <div class="form-group">
+        <label>Percentage of special bombs</label>
+        <input type="number" id="customSpecialBombRatio">
+      </div>
+
+      <div class="form-group">
+        <label>Beginning land size (default: 10)</label>
+        <input type="number" id="customLandSize">
+      </div>
+
+      <hr>
+
+      <div class="form-group">
+        <label>Sonar reveal amount</label>
+        <input type="number" id="customSonarAmount">
+      </div>
+
+      <div class="form-group">
+        <label>Smoke hide amount</label>
+        <input type="number" id="customSmokeAmount">
+      </div>
+
+      <div class="form-group">
+        <label>Cluster spread amount</label>
+        <input type="number" id="customClusterAmount">
+      </div>
+
+      <div class="form-group">
+        <label>Spread bomb spread amount</label>
+        <input type="number" id="customSpreadAmount">
+      </div>
+
+      <div class="form-group">
+        <label>Glitch popup amount</label>
+        <input type="number" id="customGlitchAmount">
+      </div>
+
+      <fieldset class="checkbox-group">
+        <legend>Bomb Types</legend>
+
+        <label><input type="checkbox" id="customHasHalfBomb"> Half bomb</label>
+        <label><input type="checkbox" id="customHasSonar"> Sonar bomb</label>
+        <label><input type="checkbox" id="customHasFlagBomb"> Flag bomb</label>
+        <label><input type="checkbox" id="customHasGhost"> Ghost bomb</label>
+        <label><input type="checkbox" id="customHasFriendly"> Friendly bomb</label>
+        <label><input type="checkbox" id="customHasBombHalfBomb"> 1.5 bomb</label>
+        <label><input type="checkbox" id="customHasSmoke"> Smoke bomb</label>
+        <label><input type="checkbox" id="customHasCluster"> Cluster bomb</label>
+        <label><input type="checkbox" id="customHasNuke"> Nuke</label>
+        <label><input type="checkbox" id="customHasTwoBomb"> Two bomb</label>
+        <label><input type="checkbox" id="customHasGlitchBomb"> Glitch bomb</label>
+        <label><input type="checkbox" id="customHasSpread"> Spread bomb</label>
+        <label><input type="checkbox" id="customHasVirus"> Hidden bomb</label>
+        <label><input type="checkbox" id="customHasReverse"> Reverse bomb</label>
+        <label><input type="checkbox" id="customHasRandom"> Dice bomb</label>
+        <label><input type="checkbox" id="customHasUltimate"> Ultimate bomb</label>
+        <label><input type="checkbox" id="customHasMedic"> Medic bomb</label>
+        <label><input type="checkbox" id="customHasAntimatter"> Antimatter bomb</label>
+      </fieldset>
+
+      <button id="customStartButton" class="start-btn">Start</button>
+    </div>
+  </div>
+
+  <!-- Tooltip -->
+  <div id="infoTooltip" style="
+    position: absolute;
+    pointer-events: none; 
+    padding: 5px 10px;
+    background-color: rgba(50,50,50,1);
+    color: white;
+    border: 1px solid black;
+    font-family: 'Times New Roman';
+    font-size: 16px;
+    display: none; 
+    z-index: 1000;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4);
+  "></div>
+  <!-- -->
+  <div class="bottomMargin">
+    <p1 id="bombsGame">Bombs left: 0</p1>
+    <p1 id="timerGame">Time: 00:00</p1>
+    <p1 id="livesGame">Lives left: 3</p1>
+  </div>
+  <!-- Rendering -->
+  <canvas id="canvasGame" class="bottomMargin"></canvas>
+  <br>
+  <label for="gameSize">Game size:</label>
+  <select name="gameSize" id="gameSize">
+    <option value="64">64x64</option>
+    <option value="128">128x128</option>
+    <option value="32">32x32</option>
+    <option value="16">16x16</option>
+    <option value="14">14x14</option>
+    <option value="12">12x12</option>
+    <option value="10">10x10</option>
+    <option value="8">8x8</option>
+  </select>
+  <button id="viewModifiersButton">View Modifiers</button>
+  <label for="gamemode">Gamemode:</label>
+  <select name="gamemode" id="gamemode">
+    <option value="normal">Normal</option>
+    <option value="roguelike">Roguelike (Infinite)</option>
+    <option value="dark">Dark</option>
+    <option value="ultimate">Ultimate</option>
+  </select>
+  <button id="gamemodeButton">Set gamemode (RESETS GAME)</button>
+  <br>
+  <p1 id="bombsRevealedGame" class="red">Bombs revealed: 0</p1>
+  <div class="bottomMargin">
+    <button id="resetButton">Reset</button>
+    <button id="showButton">Give up</button>
+    <button id="bombRevealButton">Reveal one bomb</button>
+    <button id="toggleInfoCardsButton">Turn info cards off</button>
+  </div>
+  <div>
+    <label for="txtPack">Texture pack: </label>
+    <select id="txtPack" name="txtPack">
+      <option value="64x">64x (Default)</option>
+      <option value="32x">32x (Old)</option>
+    </select>
+  </div>
+  <!-- Explanations -->
+  <br>
+  <h2>--Dictionary--</h2>
+  <h3>Bombs:</h3>
+  <ul>
+    <li>Regular bomb - no effects - deals 1 DMG</li>
+    <li>Half bomb - no effects - deals 0.5 DMG</li>
+    <li>Sonar bomb - Reveals other bombs - deals 1.5 DMG</li>
+    <li>Flag bomb - Destroys all flags - deals 0.5 DMG</li>
+    <li>Ghost bomb - Phases into a deadly bomb somewhere else - deals 0 DMG</li>
+    <li>Friendly bomb - Heals you - gives 1 life</li>
+    <li>1.5 bomb - no effects - deals 1.5 DMG</li>
+    <li>Smoke bomb - Hides the number of some cells - deals 0.5 DMG</li>
+    <li>Cluster bomb - Creates new regular bombs - deals 1 DMG</li>
+    <li>Nuke - no effects - deals 999 DMG</li>
+    <li>Two bomb - no effects - deals 2 DMG</li>
+    <li>Glitch bomb - Spawns error popups - deals 0.5 DMG</li>
+    <li>Spread bomb - Creates copies of itself - deals 1 DMG</li>
+    <li>Reverse bomb - Reverses controls - deals 0.5 DMG</li>
+    <li>Dice bomb - Random effect - deals 1 DMG</li>
+    <li>Ultimate bomb - Everything at once - deals 2 DMG - (CAN ONLY BE ACCESSED VIA ULTIMATE MODE OR CUSTOM DIFFICULTY)</li>
+    <li>Medic bomb - Heals you - gives 2 lives</li>
+    <li>Antimatter bomb - Resets all cells in a plus around itself - deals 1 DMG - (Current texture is a placeholder)</li>
+  </ul>
+  <h3>Gamemodes:</h3>
+  <ul>
+    <li>Normal - Regular game</li>
+    <li>Roguelike - Goes through each difficulty infinitely, gaining abilities after each win </li>
+    <li>Dark - Entire board is black except for a small area around your mouse </li>
+    <li>Ultimate - All bombs are now ultimate bombs</li>
+  </ul>
+  <script src="classes.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
